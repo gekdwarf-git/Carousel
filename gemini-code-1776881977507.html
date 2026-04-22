@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon Carousel Photo</title>
+    <style>
+        /* CSS : C'est ici qu'on gère l'apparence */
+        body { font-family: sans-serif; display: flex; justify-content: center; background-color: #f4f4f4; }
+        
+        .carousel {
+            position: relative;
+            width: 80%;
+            max-width: 600px;
+            margin-top: 50px;
+            border: 5px solid white;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* On cache les images par défaut */
+        .slide { display: none; }
+        
+        /* Style des images pour qu'elles rentrent bien */
+        img { width: 100%; height: auto; display: block; }
+
+        /* Style des boutons "Précédent" et "Suivant" */
+        .btn {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 15px;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            border: none;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+        .btn:hover { background: rgba(0,0,0,0.8); }
+        .next { right: 0; }
+        .prev { left: 0; }
+    </style>
+</head>
+<body>
+
+    <div class="carousel">
+        <div class="slide">
+            <img src="https://picsum.photos/id/10/600/400" alt="Photo 1">
+        </div>
+        <div class="slide">
+            <img src="https://picsum.photos/id/20/600/400" alt="Photo 2">
+        </div>
+        <div class="slide">
+            <img src="https://picsum.photos/id/30/600/400" alt="Photo 3">
+        </div>
+
+        <button class="btn prev" onclick="changerSlide(-1)">❮</button>
+        <button class="btn next" onclick="changerSlide(1)">❯</button>
+    </div>
+
+    <script>
+        // JAVASCRIPT : C'est le cerveau qui fait bouger les images
+        let index = 0; // On commence à la première image
+
+        function montrerSlide(n) {
+            let slides = document.getElementsByClassName("slide");
+            
+            // Si on dépasse la fin, on revient au début
+            if (n >= slides.length) { index = 0; }
+            // Si on va avant le début, on va à la fin
+            if (n < 0) { index = slides.length - 1; }
+
+            // On cache toutes les images
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            // On affiche seulement l'image actuelle
+            slides[index].style.display = "block";
+        }
+
+        function changerSlide(direction) {
+            index += direction;
+            montrerSlide(index);
+        }
+
+        // On affiche la première image au chargement de la page
+        montrerSlide(index);
+    </script>
+
+</body>
+</html>
